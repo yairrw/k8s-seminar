@@ -8,9 +8,8 @@ spec:
    image: nginx:1.7.9 
    ports: 
    - containerPort: 80
- - name: springapp
+ - name: yaniv-music
    image: yanivomc/spring-music:latest
    ports: 
    - containerPort: 8080
-
 
