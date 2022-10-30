@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: spring
+    tier: fe
+spec:
+  # here we select the number of pods we wish to start and the selector that tells our replica set which pods it needs
+  #  to manage
+  replicas: 2
+  selector:  # Using the selector we tell our replicaset which pods to manage
+    matchLabels:
+      tier: frontend
+  template:   # here we define our PODS Specs (k8s uses go template in the background)
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - eu-west-1b
+                - eu-west-1c
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: node.kubernetes.io/instance-type
+                operator: In
+                values:
+                - t3.large
+      containers:
+      - name: bear
+        image: supergiantkir/animals:bear
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /storage
+          name: app-storage
+      - name: spring-music
+        image: yanivomc/spring-music:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /storage
+          name: app-storage
+      volumes:
+      - name: app-storage
+        hostPath:
+          # directory location on host
+          path: /tmp/files
