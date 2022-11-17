@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: alpine-daemonset
+  labels:
+    app: alpine
+spec:
+  selector:
+    matchLabels:
+      name: alpine
+  template:
+    metadata:
+      labels:
+        name: alpine
+    spec:
+      containers:
+      - name: alpine
+        image: alpine:latest
+        command:
+          - sleep 100000
