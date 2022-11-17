@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: alpine-daemonset
+  name: yair-daemonset
   labels:
     app: alpine
 spec:
