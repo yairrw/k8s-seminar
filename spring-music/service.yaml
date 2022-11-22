@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spring-service #from RELEASE NAME
+spec:
+  selector:
+    app: music
+  type: {{ .Values.service.type }} | default NodePort #from values | DEFAULT TO NODEPORT
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+    

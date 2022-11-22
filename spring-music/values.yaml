@@ -1,0 +1,7 @@
+deployment:
+  image: yanivomc/spring-music
+  tag: latest
+  replicas: 1
+  tag: latest
+service:
+  type: LoadBalancer
