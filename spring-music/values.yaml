@@ -1,7 +1,6 @@
 deployment:
-  image: yanivomc/spring-music
-  tag: latest
   replicas: 1
-  tag: latest
+  name: spring-music
+  image: "yanivomc/spring-music:latest"
 service:
-  type: LoadBalancer
+    type: NodePort
